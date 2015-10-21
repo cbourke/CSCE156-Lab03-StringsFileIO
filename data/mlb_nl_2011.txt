@@ -1,0 +1,16 @@
+Phillies 102 60
+Braves 89 73
+Nationals 80 81
+Mets 77 85
+Marlins 72 90
+Brewers 96 66
+Cardinals 90 72
+Reds 79 83
+Pirates 72 90
+Cubs 71 91
+Astros 56 106
+DBacks 94 68
+Giants 86 76
+Dodgers 82 79
+Rockies 73 89
+Padres 71 91 
