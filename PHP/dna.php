@@ -1,6 +1,6 @@
 <?php
 
-  $file_handle = fopen("H1N1nucleotide.txt", "r");
+  $file_handle = fopen("../data/H1N1nucleotide.txt", "r");
 
   $dna = "";
   while(!feof($file_handle)) {

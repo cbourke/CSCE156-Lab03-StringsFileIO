@@ -10,7 +10,7 @@ function teamComp($a, $b) {
   }
 }
 
-  $file_handle = fopen("mlb_nl_2011.txt", "r");
+  $file_handle = fopen("../data/mlb_nl_2011.txt", "r");
 
   $teams = array();
 
