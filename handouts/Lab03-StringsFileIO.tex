@@ -1,0 +1,394 @@
+\documentclass[12pt]{scrartcl}
+
+\input{../preamble.tex}
+
+\title{CSCE 156 -- Computer Science II}
+\subtitle{Lab 03 - Strings \& File IO}
+\author{Dr.\ Chris Bourke}
+\date{~}
+
+\begin{document}
+
+\maketitle
+
+\section*{Prior to Lab}
+
+Review this laboratory handout prior to lab.
+
+For Java:
+\begin{enumerate}
+  \item Read Java String tutorial: \\
+	\url{http://download.oracle.com/javase/tutorial/java/data/strings.html}
+  \item Read Java Arrays tutorial: \\
+	\url{http://download.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html}
+  \item Read Java File I/O tutorial: \\
+  	\url{http://download.oracle.com/javase/tutorial/essential/io/file.html}
+  \item Read the Java tutorial on the \mintinline{java}{System.printf()} 
+	method: \\
+	\url{https://docs.oracle.com/javase/tutorial/java/data/numberformat.html}
+\end{enumerate}
+
+For PHP:
+\begin{enumerate}
+  \item Read PHP Arrays tutorial: \\
+    \url{http://www.php.net/manual/en/language.types.array.php}
+  \item Read PHP tutorial on string functions: \\
+	\url{http://www.php.net/manual/en/ref.strings.php}
+  \item Read PHP tutorial on file streams: \\
+	\url{http://www.php.net/manual/en/book.filesystem.php}
+  \item Read the PHP Manual on the \mintinline{php}{printf()} 
+    (print formatted) and \mintinline{php}{sprintf()} functions:\\
+	\url{http://php.net/manual/en/function.printf.php}\\
+	\url{http://www.php.net/manual/en/function.sprintf.php}
+\end{enumerate}
+
+\section*{Lab Objectives \& Topics}
+Following the lab, you should be able to:
+\begin{itemize}
+  \item Use Strings and Arrays in PHP/Java
+  \item Use basic File I/O in PHP/Java
+\end{itemize}
+
+\input{../peerText.tex}
+
+\section*{Getting Started}
+
+Clone the project code for this lab from GitHub in Eclipse using the
+URL, \url{https://github.com/cbourke/CSCE156-Lab03-StringsFileIO}.
+Refer to Lab 01 for instructions on how to clone a project from GitHub.
+
+For those with prior Java experience, do the PHP section.  For those
+without prior Java experience, do the Java section.
+
+\part*{PHP}
+
+\section*{Strings \& File IO}
+
+You will familiarize yourself with strings and file input/output 
+by completing two PHP scripts.  
+
+The first program involves processing a DNA nucleotide sequence (a 
+string consisting of the characters A, G, C, and T standing for the 
+nucleobases adenine, guanine, cytosine, and thymine).  A common 
+operation on DNA is searching for and counting the number of instances 
+of a particular subsequence.  For example, in the following DNA 
+sequence, 
+$$TAGAAAAGGGAAAGATAGT$$
+the subsequence $TAG$ appears twice.  Your activity will involve 
+processing a file containing a nucleotide sequence of the H1N1 flu 
+virus and counting the number of instances of various subsequences.
+
+The second program involves processing a file containing formatted 
+data.  Specifically, you will process a file containing the win/loss 
+records of National League baseball Teams from the 2011 season.  The 
+file is formatted as follows: each line contains the win/loss record 
+of a single team (16 teams total).  Each line contains the team name, 
+the number of wins, and the number of losses.  Your program will read 
+in the file, process the data and sort the teams in the order of their 
+win percentage (wins divided by total games) and output the sorted and 
+reformatted team list into a new file.
+
+\subsection*{Formatted Output}
+
+Most programming languages support or implement the standard 
+functionality of the \mintinline{text}{printf()} standard of formatted 
+output originally provided in the C programming language.
+
+The \mintinline{text}{printf()} function is a variable argument 
+function that takes a string as its first argument that specifies 
+a format in which to print the subsequent arguments.  Various flags 
+can be used to print variable values in a specific format or as a 
+specific type.  Some of the major flags supported:
+\begin{itemize}
+  \item \mintinline{text}{%Ns} -- print the argument as a string, 
+  	right-justified with at least $N$ characters.  If the string 
+	value is less than $N$, it will be padded out with spaces.  
+	Variations on this flag can be used to change the padding 
+	character and to left-justify (negative $N$) instead.
+  \item \mintinline{text}{%Nd} -- print the argument as an integer 
+	with at least $N$ spaces.
+  \item \mintinline{text}{%N.Mf} -- print the argument as a floating 
+	point number with at least $N$ characters (including the decimal) 
+	and at most $M$ decimals of precision.
+\end{itemize}
+	
+Consider the following example code snippet.
+
+\begin{minted}{php}
+$a = "hello";
+$b = 42;
+$c = 3.1418;
+printf("%10s, %5d\t%5.2f\n", $a, $b, $c);
+\end{minted}
+
+This would result in the following (note the spacing denoted
+with a \textvisiblespace\ symbol):
+
+\begin{minted}[showspaces]{text}
+     hello,     42	 3.14
+\end{minted}     
+
+\section*{Activities}
+
+\subsection*{Substring Searching}
+
+\begin{enumerate}
+  \item Open the \mintinline{text}{PHP/dna.php} and the 
+  	\mintinline{text}{data/H1N1nucleotide.txt} files
+  \item Modify the code to read in a subsequence from the command 
+  	line (and to echo an error and exit if it is not provided).
+  \item The code to read in and process the nucleotide sequence is 
+	already provided.  Study its usage: it reads in the file line by 
+	line, trims each line (removes leading and trailing whitespace) and 
+	concatenates it into one large string.
+  \item At the end of the script, write your own code to count the
+	number of occurrences of the subsequences.  Strings in PHP can 
+	be processed like character arrays: \mintinline{php}{$subsequence[0]} 
+	gives you the first character of \mintinline{php}{$subsequence}. 
+	Individual characters can be compared using the \mintinline{php}{==}
+	comparison operator.
+  \item Hand in your source file using the webhandin and grade yourself 
+	with the webgrader.
+\end{enumerate}
+	
+\subsection*{Baseball Records}
+
+\begin{enumerate}
+  \item Open the \mintinline{text}{PHP/Team.php} and 
+  	\mintinline{text}{PHP/baseball.php} files.  The \mintinline{php}{Team} 
+	class has already been implemented and included in the 
+	\mintinline{text}{baseball.php} script.
+  \item Much of the code has been provided for you, including code to 
+	print the teams for debugging purposes and to sort the teams according 
+	to win percentage.
+  \item Write code to read in the \mintinline{text}{data/mlb_nl_2011.txt} 
+	data file at the appropriate point in this script.  You may find the 
+	following functions useful:
+  \begin{itemize}
+	 \item \mintinline{php}{preg_split($pattern, $str)} (\url{http://php.net/manual/en/function.preg-split.php})
+	 \item \mintinline{php}{explode($delimiter, $str)} (\url{http://www.php.net/manual/en/function.explode.php})
+  \end{itemize}
+  	Both functions tokenize the given string according to a regular 
+	expression or a delimiter respectively and return an array of 
+	string tokens.  
+  \item The \mintinline{php}{Team} class has one constructor that 
+	takes the team name, wins, and losses; example:
+	
+	\mintinline{php}{$team = new Team($name, $wins, $loss);}
+	
+	You can access the methods of the \mintinline{php}{Team} class using
+	the syntax: 
+	
+	\begin{minted}{php}
+	$name = $team->getName();
+	$winPerc = $team->getWinPercentage();
+	\end{minted}
+	
+  \item Write code to output the sorted array of teams to a file 
+  	\mintinline{text}{data/mlb_nl_2011_results.txt} according 
+	to the following format:
+	\begin{itemize}
+	  \item Each team's information should appear on a separate line.
+	  \item Each line should contain the team's name and its win percentage.
+      \item The team name should be right-justified in a column of length 
+	  	10, the win percentage should be a number 0--100 with two decimals 
+		of precision.
+	\end{itemize}
+	Your output file should look like the following:
+
+\begin{minted}{text}
+ Cardinals 55.56
+    Braves 54.94
+    Giants 53.09
+   Dodgers 50.93
+ Nationals 49.69
+\end{minted}
+
+  \item Answer the questions in your worksheet and demonstrate your 
+  	working programs to a lab instructor.
+\end{enumerate}
+
+\subsection*{Advanced Activity (Optional)}
+	
+The code to sort the teams according to their win percentage was 
+provided for you.  It involved defining a \emph{comparator} function 
+that was passed as an argument to a built-in sort function.  Study 
+this code and read the documentation for the sorting function.  
+Modify the comparison function to sort the list of teams in alphabetic 
+order according to the team name.
+
+\newpage
+\part*{Java}
+
+\section*{Strings \& File IO}
+
+You will familiarize yourself with strings and file input/output 
+by completing two Java programs.  
+
+The first program involves processing a DNA nucleotide sequence (a 
+string consisting of the characters A, G, C, and T standing for the 
+nucleobases adenine, guanine, cytosine, and thymine).  A common 
+operation on DNA is searching for and counting the number of instances 
+of a particular subsequence.  For example, in the following DNA 
+sequence, 
+$$TAGAAAAGGGAAAGATAGT$$
+the subsequence $TAG$ appears twice.  Your activity will involve 
+processing a file containing a nucleotide sequence of the H1N1 flu 
+virus and counting the number of instances of various subsequences.
+
+The second program involves processing a file containing formatted 
+data.  Specifically, you will process a file containing the win/loss 
+records of National League baseball Teams from the 2011 season.  The 
+file is formatted as follows: each line contains the win/loss record 
+of a single team (16 teams total).  Each line contains the team name, 
+the number of wins, and the number of losses.  Your program will read 
+in the file, process the data and sort the teams in the order of their 
+win percentage (wins divided by total games) and output the sorted and 
+reformatted team list into a new file.
+
+\subsection*{Formatted Output}
+
+Most programming languages support or implement the standard 
+functionality of the \mintinline{text}{printf()} standard of formatted 
+output originally provided in the C programming language.
+
+The \mintinline{text}{printf()} function is a variable argument 
+function that takes a string as its first argument that specifies 
+a format in which to print the subsequent arguments.  Various flags 
+can be used to print variable values in a specific format or as a 
+specific type.  Some of the major flags supported:
+\begin{itemize}
+  \item \mintinline{text}{%Ns} -- print the argument as a string, 
+  	right-justified with at least $N$ characters.  If the string 
+	value is less than $N$, it will be padded out with spaces.  
+	Variations on this flag can be used to change the padding 
+	character and to left-justify (negative $N$) instead.
+  \item \mintinline{text}{%Nd} -- print the argument as an integer 
+	with at least $N$ spaces.
+  \item \mintinline{text}{%N.Mf} -- print the argument as a floating 
+	point number with at least $N$ characters (including the decimal) 
+	and at most $M$ decimals of precision.
+\end{itemize}
+	
+Consider the following example code snippet.
+
+\begin{minted}{java}
+String a = "hello"; 
+int b = 42;
+double c = 3.1418;
+String result = String.format("%10s, %5d\t%5.2f\n", a, b, c);
+System.out.println(result);
+
+//alternatively:
+System.out.printf("%10s, %5d\t%5.2f\n", a, b, c);
+\end{minted}
+
+This would result in the following (note the spacing denoted
+with a \textvisiblespace\ symbol):
+
+\begin{minted}[showspaces]{text}
+     hello,     42	 3.14
+\end{minted}     
+
+\section*{Activities}
+
+\subsection*{Substring Searching}
+
+\begin{enumerate}
+  \item Open the \mintinline{text}{DNA.java} and the 
+  	\mintinline{text}{data/H1N1nucleotide.txt} files
+  \item Modify the code to read in a subsequence from the command 
+  	line (and to echo an error and exit if it is not provided).
+  \item The code to read in and process the nucleotide sequence is 
+	already provided.  Study its usage: it reads in the file line by 
+	line, trims each line (removes leading and trailing whitespace) and 
+	concatenates it into one large string.
+  \item At the end of the script, write your own code to count the
+	number of occurrences of the subsequences.  Individual characters
+	in a Java \mintinline{java}{String} can be retrieved using the
+	\mintinline{java}{charAt(int)} method.  For example, 
+	\mintinline{java}{subsequence.charAt(0)} gives you the first 
+	character of the string \mintinline{java}{subsequence}. 
+	Individual characters can be compared using the \mintinline{java}{==}
+	comparison operator.
+  \item Hand in your source file using the webhandin and grade yourself 
+	with the webgrader.
+\end{enumerate}
+	
+\subsection*{Baseball Records}
+
+\begin{enumerate}
+  \item Open the \mintinline{text}{Team.java} and 
+  	\mintinline{text}{Baseball.java} files.  The \mintinline{java}{Team} 
+	class has already been implemented for you.
+  \item Much of the code has been provided for you, including code to 
+	print the teams for debugging purposes and to sort the teams according 
+	to win percentage.
+  \item Write code to read in the \mintinline{text}{data/mlb_nl_2011.txt} 
+	data file at the appropriate point in this script.  You may find the 
+	following useful:
+  \begin{itemize}
+	\item The \mintinline{java}{Scanner} class can be used to get
+	 individual tokens in a file.  By default the delimiter for this
+	 class is any whitespace.  
+	\item The \mintinline{java}{Team} class has one constructor 
+	 that takes the team name, wins, and losses; example:
+	 
+	 \mintinline{java}{Team t = new Team(name, wins, loss);}
+	 
+    \item If you have an instance of \mintinline{java}{Team}, you can 
+	 make use of its methods using the following syntax:
+	 
+	 \begin{minted}{java}
+	 String name = t.getName();
+	 double winPerc = t.getWinPercentage();
+	 \end{minted}
+  \end{itemize}
+	
+  \item Write code to output the sorted array of teams to a file 
+  	\mintinline{text}{data/mlb_nl_2011_results.txt} according 
+	to the following format:
+	\begin{itemize}
+	  \item Each team's information should appear on a separate line.
+	  \item Each line should contain the team's name and its win percentage.
+      \item The team name should be right-justified in a column of length 
+	  	10, the win percentage should be a number 0--100 with two decimals 
+		of precision.
+	\end{itemize}
+	Your output file should look like the following:
+
+\begin{minted}{text}
+ Cardinals 55.56
+    Braves 54.94
+    Giants 53.09
+   Dodgers 50.93
+ Nationals 49.69
+\end{minted}
+
+Hint: to output to a file, use the \mintinline{java}{PrintWriter} 
+class which supports easy output to files.  A full example:
+
+\begin{minted}{java}
+try {
+  PrintWriter out = new PrintWriter("filename");
+  out.write("you can output a string directly using this method!");
+  out.close();
+} catch (FileNotFoundException fnfe) {
+  throw new RuntimeException(fnfe);
+}
+\end{minted}
+  \item Answer the questions in your worksheet and demonstrate your 
+  	working programs to a lab instructor.
+\end{enumerate}
+
+\subsection*{Advanced Activity (Optional)}
+	
+The code to sort the teams according to their win percentage was 
+provided for you.  It involved defining a \mintinline{java}{Comparator}
+(as an anonymous class) that was passed as an argument to a built-in
+sort method.  Study this code and read the documentation for the sorting 
+method.  Modify the \mintinline{java}{Comparator} to sort the list of 
+teams in alphabetic order according to the team name.
+
+
+\end{document}
